@@ -52,7 +52,7 @@ async def get_books() -> OrderedDict[int, Book]:
     "/{book_id}", response_model=OrderedDict[int, Book], status_code=status.HTTP_200_OK
 )
 async def get_books_by_id(book_id: int) -> OrderedDict[int, Book]:
-    """ endpoint to get a book by id -- check here"""
+    """ endpoint to get a book by id """
     book = db.get_book(book_id)
     if book is None:
         return JSONResponse(status_code=status.HTTP_404_NOT_FOUND, content={"detail": "Book not found"})
@@ -60,6 +60,20 @@ async def get_books_by_id(book_id: int) -> OrderedDict[int, Book]:
     return JSONResponse(
         status_code=status.HTTP_200_OK, content=book.model_dump()
     )
+    
+@router.get(
+    "/rrrr/{book_id}", response_model=OrderedDict[int, Book], status_code=status.HTTP_200_OK
+)
+async def get_books_by_id_new(book_id: int) -> OrderedDict[int, Book]:
+    """ endpoint to get a book by id """
+    book = db.get_book(book_id)
+    if book is None:
+        return JSONResponse(status_code=status.HTTP_404_NOT_FOUND, content={"detail": "Book not found"})
+    
+    return JSONResponse(
+        status_code=status.HTTP_200_OK, content=book.model_dump()
+    )
+
 
 @router.put("/{book_id}", response_model=Book, status_code=status.HTTP_200_OK)
 async def update_book(book_id: int, book: Book) -> Book:
