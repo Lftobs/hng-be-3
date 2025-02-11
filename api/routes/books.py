@@ -53,14 +53,13 @@ async def get_books() -> OrderedDict[int, Book]:
 )
 async def get_books_by_id(book_id: int) -> OrderedDict[int, Book]:
     """ endpoint to get a book by id """
-    # book = db.get_book(book_id)
-    # if book is None:
-    #     return JSONResponse(status_code=status.HTTP_404_NOT_FOUND, content={"detail": "Book not found"})
+    book = db.get_book(book_id)
+    if book is None:
+        return JSONResponse(status_code=status.HTTP_404_NOT_FOUND, content={"detail": "Book not found"})
     
-    # return JSONResponse(
-    #     status_code=status.HTTP_200_OK, content=book.model_dump()
-    # )
-    return {}
+    return JSONResponse(
+        status_code=status.HTTP_200_OK, content=book.model_dump()
+    )
     
 
 @router.put("/{book_id}", response_model=Book, status_code=status.HTTP_200_OK)
